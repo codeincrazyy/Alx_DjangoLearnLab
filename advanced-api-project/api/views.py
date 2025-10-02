@@ -66,15 +66,17 @@ class BookCreateView(generics.CreateAPIView):
 # -------------------------------
 # UpdateView: Only authenticated users can update
 # -------------------------------
+# UpdateView: Only authenticated users can update
 class BookUpdateView(generics.UpdateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]  # Must be logged in
 
     def perform_update(self, serializer):
         publication_year = serializer.validated_data.get("publication_year")
         current_year = datetime.date.today().year
-        if publication_year > current_year:
+        # Only validate if a publication_year was provided in the update
+        if publication_year is not None and publication_year > current_year:
             raise ValidationError({"publication_year": "Cannot update book to a future year."})
         serializer.save()
 
