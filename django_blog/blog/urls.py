@@ -13,6 +13,6 @@ urlpatterns = [
     path('posts/', views.PostListView.as_view(), name='posts'),                   # List all posts
     path('post/new/', views.PostCreateView.as_view(), name='post-create'),       # Create new post
     path('post/<int:pk>/', views.PostDetailView.as_view(), name='post-detail'),  # View post details
-    path('post/<int:pk>/edit/', views.PostUpdateView.as_view(), name='post-update'),  # Edit post
+    path('post/<int:pk>/update/', views.PostUpdateView.as_view(), name='post-update'),  # Edit post
     path('post/<int:pk>/delete/', views.PostDeleteView.as_view(), name='post-delete'),# Delete post
 ]
