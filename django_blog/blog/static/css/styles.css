@@ -84,3 +84,17 @@ footer {
     margin-bottom: 15px;
     text-align: center;
 }
+
+.btn {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 5px 0;
+    background-color: #333;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.btn-danger {
+    background-color: #c0392b;
+}
