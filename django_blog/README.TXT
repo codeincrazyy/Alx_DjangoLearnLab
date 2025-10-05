@@ -312,3 +312,124 @@ Passwords and authentication are handled securely by Django.
 Styling is consistent across post pages using styles.css.
 
 URLs are intuitive and RESTful for easy navigation.
+
+Django Blog Comment System Documentation
+
+Overview
+The comment system allows users to interact with blog posts by leaving comments. Only authenticated users can add, edit, or delete their own comments. All users, including anonymous visitors, can view comments under each post.
+
+Models
+
+Comment Model Fields
+
+post: ForeignKey to the Post model. Indicates which post the comment belongs to.
+
+author: ForeignKey to Django’s User model. Identifies the user who wrote the comment.
+
+content: TextField storing the comment content.
+
+created_at: DateTimeField automatically set when the comment is created.
+
+updated_at: DateTimeField automatically updated when the comment is edited.
+
+Forms
+
+CommentForm
+
+Based on Django’s ModelForm.
+
+Includes a single field for content.
+
+Ensures that content is not empty and validates text input.
+
+Views
+
+Add Comment
+
+URL: /post/<post_id>/comments/new/
+
+View: add_comment(request, post_id)
+
+Permissions: Only authenticated users can submit a comment.
+
+Function: Creates a new comment linked to the specified post and the logged-in user.
+
+Edit Comment
+
+URL: /comments/<comment_id>/edit/
+
+View: edit_comment(request, comment_id)
+
+Permissions: Only the author of the comment can edit it.
+
+Function: Allows the author to modify the content of their comment.
+
+Delete Comment
+
+URL: /comments/<comment_id>/delete/
+
+View: delete_comment(request, comment_id)
+
+Permissions: Only the author of the comment can delete it.
+
+Function: Deletes the comment permanently from the database.
+
+Display Comments
+
+All comments are displayed under the corresponding blog post on the post detail page.
+
+Anonymous users can view comments but cannot create, edit, or delete them.
+
+Templates
+
+Post Detail Template (post_detail.html) includes:
+
+List of comments below the post content.
+
+A form for authenticated users to add new comments.
+
+Edit and delete buttons for the comment author next to each comment.
+
+Comment Form Template:
+
+Uses CSRF token for security.
+
+Provides a text area for entering comment content.
+
+Displays validation errors when the input is invalid.
+
+Permissions & Rules
+
+Only authenticated users can add comments.
+
+Only the comment author can edit or delete their own comment.
+
+Comment visibility is public; all users can read comments.
+
+CSRF protection is enabled for all forms to prevent cross-site request forgery.
+
+Usage Instructions
+
+Navigate to any blog post detail page (/post/<post_id>/).
+
+View existing comments listed under the post.
+
+If logged in:
+
+Add a new comment using the provided form.
+
+Edit or delete comments you authored using the buttons next to your comment.
+
+If not logged in:
+
+Comments are read-only. To interact, log in or register.
+
+Security Considerations
+
+Input is validated to prevent empty comments.
+
+User permissions ensure only authors can modify their own comments.
+
+All comment-related forms use CSRF tokens.
+
+Database integrity is maintained via foreign key constraints.
