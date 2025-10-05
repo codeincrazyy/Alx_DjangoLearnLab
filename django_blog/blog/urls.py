@@ -9,10 +9,10 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('profile/', views.profile, name='profile'),
 
-    # Blog post CRUD URLs
+    # Blog post CRUD URLs (updated to singular 'post')
     path('posts/', views.PostListView.as_view(), name='posts'),                   # List all posts
-    path('posts/new/', views.PostCreateView.as_view(), name='post-create'),       # Create new post
-    path('posts/<int:pk>/', views.PostDetailView.as_view(), name='post-detail'),  # View post details
-    path('posts/<int:pk>/edit/', views.PostUpdateView.as_view(), name='post-update'),  # Edit post
-    path('posts/<int:pk>/delete/', views.PostDeleteView.as_view(), name='post-delete'),# Delete post
+    path('post/new/', views.PostCreateView.as_view(), name='post-create'),       # Create new post
+    path('post/<int:pk>/', views.PostDetailView.as_view(), name='post-detail'),  # View post details
+    path('post/<int:pk>/edit/', views.PostUpdateView.as_view(), name='post-update'),  # Edit post
+    path('post/<int:pk>/delete/', views.PostDeleteView.as_view(), name='post-delete'),# Delete post
 ]
