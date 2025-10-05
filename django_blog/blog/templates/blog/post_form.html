@@ -9,5 +9,10 @@
   </button>
 </form>
 
+<form method="post">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit" class="btn">Save Post</button>
+</form>
+
 <a href="{% url 'posts' %}" class="btn">Cancel</a>
 {% endblock %}

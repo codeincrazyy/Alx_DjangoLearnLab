@@ -433,3 +433,49 @@ User permissions ensure only authors can modify their own comments.
 All comment-related forms use CSRF tokens.
 
 Database integrity is maintained via foreign key constraints.
+
+Tagging and Search Features
+1. Tagging Posts
+
+When creating or updating a blog post, you can assign one or more tags.
+
+The tag field supports both selecting existing tags and creating new ones.
+
+Tags are displayed under each post on the post detail page.
+
+Clicking on a tag will take you to a filtered view showing all posts that share that tag.
+
+Example:
+
+Create a post titled “Django Basics”.
+
+Add tags: django, python, webdev.
+
+On the post detail page, you will see clickable tags. Selecting django will show all posts tagged with django.
+
+2. Searching Posts
+
+A search bar is available on the site (typically in the navigation bar or posts page).
+
+Users can type any keyword and search across post titles, content, and tags.
+
+Results are displayed on a dedicated search results page.
+
+Examples:
+
+Searching for python will return all posts with python in the title, content, or as a tag.
+
+Searching for tutorial will return posts where tutorial appears anywhere in the text.
+
+3. URL Patterns for Quick Access
+
+View posts by a specific tag:
+
+/tags/<tag_name>/
+
+
+Example: /tags/django/ → shows all posts tagged with django.
+
+Perform a search query:
+
+/search/?q=<keyword>
