@@ -5,6 +5,7 @@ from .models import Profile
 from .models import Post
 from .models import Comment
 from taggit.forms import TagWidget
+from taggit.managers import TaggableManager
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -30,7 +31,7 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ['title', 'content' , 'tags']
         widgets = {
-            'tags': TagWidget(attrs={'placeholder': 'Add tags separated by commas'}),
+            'tags': TagWidget(),
         }
         
 class PostForm(forms.ModelForm):
@@ -54,3 +55,10 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content']
+        
+class Post(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    published_date = models.DateTimeField(auto_now_add=True)
+    tags = TaggableManager()
