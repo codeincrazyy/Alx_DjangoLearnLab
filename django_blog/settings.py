@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "blog",
     "taggit",
     "port",
-    "user"
+    "user",
     
 ]
 
