@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "blog",
     "taggit",
-    "port",
-    "user",
+    "USER",
+    "PORT",
     
 ]
 
