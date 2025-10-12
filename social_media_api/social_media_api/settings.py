@@ -99,6 +99,22 @@ REST_FRAMEWORK = {
     ],
 }
 
+# ===============================
+# Security settings for production
+# ===============================
+
+# Helps protect against cross-site scripting (XSS) attacks
+SECURE_BROWSER_XSS_FILTER = True
+
+# Prevents browsers from trying to guess the content type (a security risk)
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Prevents your website from being shown inside an iframe (protects against clickjacking)
+X_FRAME_OPTIONS = 'DENY'
+
+# Forces HTTPS (secure connection) instead of HTTP
+SECURE_SSL_REDIRECT = True
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
