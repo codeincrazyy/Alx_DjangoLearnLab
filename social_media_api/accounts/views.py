@@ -20,6 +20,7 @@ class RegisterView(generics.CreateAPIView):
        
         user = serializer.save()
         token, created = Token.objects.get_or_create(user=user)
+        
         return Response({'user': serializer.data, 'token': token.key})
 
 
@@ -30,9 +31,10 @@ class CustomAuthToken(ObtainAuthToken):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key, 'user_id': user.pk, 'username': user.username})
+        return Response({'token': token.key, 'user_id': user.id, 'username': user.username})
+
 class loginView(generics.GenericAPIView):
-    serializer_class = UserSerializer
+    permission_Classes = [permissions.AllowAny]
 
     def post(self, request):
         username = request.data.get('username')
