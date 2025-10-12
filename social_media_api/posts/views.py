@@ -1,7 +1,13 @@
 from rest_framework import viewsets, permissions, generics
 from rest_framework.exceptions import PermissionDenied
-from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
+from django.contrib.contenttypes.models import ContentType
+from .models import Post, Comment, Like
+from notifications.models import Notification
 
 class IsAuthorOrReadOnly(permissions.BasePermission):
     """
@@ -41,3 +47,38 @@ class FeedView(generics.ListAPIView):
         following_users = self.request.user.following.all()
         # Return posts authored by followed users, newest first
         return Post.objects.filter(author__in=following_users).order_by('-created_at')
+    
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def like_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    if Like.objects.filter(post=post, user=request.user).exists():
+        return Response({'detail': 'You have already liked this post.'}, status=400)
+
+    Like.objects.create(post=post, user=request.user)
+
+    # Create notification for the post author
+    if post.author != request.user:
+        Notification.objects.create(
+            recipient=post.author,
+            actor=request.user,
+            verb='liked',
+            content_type=ContentType.objects.get_for_model(Post),
+            object_id=post.id
+        )
+
+    return Response({'detail': f'You liked the post "{post.title}".'}, status=200)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def unlike_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    like = Like.objects.filter(post=post, user=request.user).first()
+
+    if not like:
+        return Response({'detail': 'You have not liked this post yet.'}, status=400)
+
+    like.delete()
+    return Response({'detail': f'You unliked the post "{post.title}".'}, status=200)
