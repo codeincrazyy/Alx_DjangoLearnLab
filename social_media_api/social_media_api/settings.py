@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-s=p%$pby9r4wco-@o*535yneox%t(7g#9fsq095r3(_^h3-mwk"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -80,10 +80,15 @@ WSGI_APPLICATION = "social_media_api.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",  # Use PostgreSQL
+        "NAME": "social_media_api_db",             # Your database name
+        "USER": "api_user",                        # Your database username
+        "PASSWORD": "your_password",               # Your database password
+        "HOST": "localhost",                       # Server where the database lives
+        "PORT": "5432",                            # Default PostgreSQL port
     }
 }
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
