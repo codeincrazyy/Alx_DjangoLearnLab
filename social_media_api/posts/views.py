@@ -50,15 +50,14 @@ class FeedView(generics.ListAPIView):
     
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def like_post(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
-
-    if Like.objects.filter(post=post, user=request.user).exists():
+def like_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    
+    like, created = Like.objects.get_or_create(user=request.user, post=post)
+    if not created:
         return Response({'detail': 'You have already liked this post.'}, status=400)
 
-    Like.objects.create(post=post, user=request.user)
-
-    # Create notification for the post author
+    # Create a notification for the post author
     if post.author != request.user:
         Notification.objects.create(
             recipient=post.author,
@@ -70,15 +69,14 @@ def like_post(request, post_id):
 
     return Response({'detail': f'You liked the post "{post.title}".'}, status=200)
 
-
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def unlike_post(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
-    like = Like.objects.filter(post=post, user=request.user).first()
-
-    if not like:
-        return Response({'detail': 'You have not liked this post yet.'}, status=400)
-
-    like.delete()
-    return Response({'detail': f'You unliked the post "{post.title}".'}, status=200)
+def unlike_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    
+    try:
+        like = Like.objects.get(user=request.user, post=post)
+        like.delete()
+        return Response({'detail': f'You have unliked the post "{post.title}".'}, status=200)
+    except Like.DoesNotExist:
+        return Response({'detail': 'You have not liked this post.'}, status=400)
