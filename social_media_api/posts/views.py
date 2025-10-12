@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 from .models import Post, Comment, Like
 from notifications.models import Notification
+from rest_framework import generics
 
 class IsAuthorOrReadOnly(permissions.BasePermission):
     """
@@ -51,7 +52,7 @@ class FeedView(generics.ListAPIView):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def like_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+    post = generics.get_object_or_404(Post, pk=pk)
     
     like, created = Like.objects.get_or_create(user=request.user, post=post)
     if not created:
