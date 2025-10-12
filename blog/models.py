@@ -13,7 +13,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     published_date = models.DateTimeField(blank=True, null=True)
-    tags = TaggableManager(blank=True) 
+    tags = models.ManyToManyField('Tag', blank=True, related_name='posts')
 
     def __str__(self):
         return self.title
@@ -55,4 +55,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'Comment by {self.author.username} on {self.post.title}'
-    
