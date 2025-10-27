@@ -2,7 +2,8 @@ from django.shortcuts import render
 from .models import Library, Book
 from django.views.generic import DetailView
 from django.views.generic.detail import DetailView
-
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
 # Function-based view to list all books
 def book_list(request):
     books = Book.objects.all()
