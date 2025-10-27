@@ -23,3 +23,14 @@ class LibraryDetailView(DetailView):
         for book in books:
             output += f"- {book.title} by {book.author.name}\n"
         return HttpResponse(output, content_type="text/plain")
+    
+    def register(request):
+       if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('book_list')
+        else:
+         form = UserCreationForm()
+       return render(request, 'relationship_app/register.html', {'form': form})
