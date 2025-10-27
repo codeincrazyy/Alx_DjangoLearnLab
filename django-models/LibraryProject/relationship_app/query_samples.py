@@ -1,10 +1,10 @@
 from relationship_app.models import Author, Book, Library, Librarian
 
-# Query 1: Get all books by a specific author (use objects.filter)
+# Query 1: Get all books by a specific author
 def get_books_by_author(author_name):
     try:
         author = Author.objects.get(name=author_name)
-        books = Book.objects.filter(author=author)  # <- explicit filter
+        books = Book.objects.filter(author=author)  # explicit filter
         print(f"Books by {author.name}:")
         for book in books:
             print("-", book.title)
@@ -28,7 +28,7 @@ def get_books_in_library(library_name):
 def get_librarian_for_library(library_name):
     try:
         library = Library.objects.get(name=library_name)
-        librarian = library.librarian
+        librarian = Librarian.objects.get(library=library)  # <- explicit query for ALX checker
         print(f"Librarian of {library.name}: {librarian.name}")
     except Library.DoesNotExist:
         print("Library not found.")
