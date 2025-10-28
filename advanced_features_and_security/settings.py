@@ -136,3 +136,30 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
+
+# Ensure you set allowed hosts in production
+ALLOWED_HOSTS = ['yourdomain.com', 'www.yourdomain.com']  # replace with your domain or IP
+
+# XSS protection
+SECURE_BROWSER_XSS_FILTER = True
+
+# Prevent clickjacking
+X_FRAME_OPTIONS = 'DENY'
+
+# Prevent MIME type sniffing
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# CSRF and session cookies only over HTTPS
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+# Optional: HSTS (forces HTTPS)
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Optional: Redirect all HTTP to HTTPS
+SECURE_SSL_REDIRECT = True
