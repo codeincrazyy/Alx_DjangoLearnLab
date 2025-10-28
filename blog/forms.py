@@ -14,7 +14,7 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'email', 'password1', 'password2' ]
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField(required=True)
