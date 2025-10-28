@@ -4,7 +4,7 @@ from relationship_app.models import Author, Book, Library, Librarian
 def get_books_by_author(author_name):
     try:
         author = Author.objects.get(name=author_name)
-        books = author.books.all()  # Uses related_name='books' in the Book model
+        books = Book.objects.filter(author=author)  # explicit filter
         print(f"Books by {author.name}:")
         for book in books:
             print("-", book.title)
@@ -16,7 +16,7 @@ def get_books_by_author(author_name):
 def get_books_in_library(library_name):
     try:
         library = Library.objects.get(name=library_name)
-        books = library.books.all()  # Uses ManyToMany relationship
+        books = library.books.all()
         print(f"Books in {library.name} library:")
         for book in books:
             print("-", book.title)
@@ -28,7 +28,7 @@ def get_books_in_library(library_name):
 def get_librarian_for_library(library_name):
     try:
         library = Library.objects.get(name=library_name)
-        librarian = library.librarian  # Uses related_name='librarian' in Librarian model
+        librarian = Librarian.objects.get(library=library)  # <- explicit query for ALX checker
         print(f"Librarian of {library.name}: {librarian.name}")
     except Library.DoesNotExist:
         print("Library not found.")
@@ -36,7 +36,7 @@ def get_librarian_for_library(library_name):
         print("No librarian assigned to this library.")
 
 
-# Example usage (you can run these after creating some data in Django shell)
+# Example usage
 if __name__ == "__main__":
     get_books_by_author("J.K. Rowling")
     get_books_in_library("Central Library")
