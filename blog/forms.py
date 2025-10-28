@@ -6,6 +6,8 @@ from .models import Post
 from .models import Comment
 from taggit.forms import TagWidget
 from taggit.managers import TaggableManager
+from django.db import models
+
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
