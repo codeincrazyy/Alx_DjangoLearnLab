@@ -123,3 +123,23 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MEDIA_ROOT = BASE_DIR / 'media'
+
+DEBUG = False
+
+# Protect against cross-site scripting (XSS)
+SECURE_BROWSER_XSS_FILTER = True
+
+# Prevent your pages from being displayed in a frame (to avoid clickjacking)
+X_FRAME_OPTIONS = 'DENY'
+
+# Prevent browsers from guessing content types
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Ensure cookies are only sent over HTTPS
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+# Optional (recommended) additions for even more security
+SECURE_HSTS_SECONDS = 31536000  # Enforce HTTPS for 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
