@@ -1,0 +1,18 @@
+{% extends "blog/base.html" %} {% block title %}{% if object %}Update{% else
+%}Create{% endif %} Post{% endblock %} {% block content %}
+<h2>{% if object %}Update{% else %}Create{% endif %} Post</h2>
+
+<form method="post">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit" class="btn">
+    {% if object %}Update{% else %}Create{% endif %}
+  </button>
+</form>
+
+<form method="post">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit" class="btn">Save Post</button>
+</form>
+
+<a href="{% url 'posts' %}" class="btn">Cancel</a>
+{% endblock %}
